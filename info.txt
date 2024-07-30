@@ -1,0 +1,3 @@
+Utilitário para a instalação "netinstall" do Issabel, onde não é necessário interagir com o painel de instalação até a conclusão da mesma.
+Variáveis configuráveis através do "settings.sh", e parâmetros de inicialização no próprio arquivo (vide "--help").
+Integração com outros métodos específicos da Phonevox (aplicação de tema, zabbix, podendo expandir para mais integrações!).

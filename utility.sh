@@ -1,0 +1,1287 @@
+function colorir() 
+{
+    declare -A cores
+    local cores=(
+        [preto]="0;30"
+        [vermelho]="0;31"
+        [verde]="0;32"
+        [amarelo]="0;33"
+        [azul]="0;34"
+        [magenta]="0;35"
+        [ciano]="0;36"
+        [branco]="0;37"
+        [preto_claro]="1;30"
+        [vermelho_claro]="1;31"
+        [verde_claro]="1;32"
+        [amarelo_claro]="1;33"
+        [azul_claro]="1;34"
+        [magenta_claro]="1;35"
+        [ciano_claro]="1;36"
+        [branco_claro]="1;37"
+        [laranja]="38;5;208"
+        [rosa]="38;5;206"
+        [azul_celeste]="38;5;45"
+        [verde_lima]="38;5;118"
+    )
+
+    local cor=$(echo "$1" | tr '[:upper:]' '[:lower:]')
+    local texto=$2
+    local string='${cores['"\"$cor\""']}'
+    eval "local cor_ansi=$string"
+    local cor_reset="\e[0m"
+
+    if [[ -z "$cor_ansi" ]]; then
+        cor_ansi=${cores["branco"]}  # Cor padrão, caso a cor seja inválida
+    fi
+
+    # Imprimir o texto com a cor selecionada
+    echo -e "\e[${cor_ansi}m${texto}${cor_reset}"
+}
+
+function warn()
+{
+    local MENSAGEM=$1
+    echo "$(colorir "amarelo" "===========================================================================")"
+    echo "$(colorir "amarelo" "#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#")"
+    echo "$(colorir "amarelo" "===========================================================================")"
+    echo ""
+    echo -e "$MENSAGEM"
+    echo ""
+    echo "$(colorir "amarelo" "===========================================================================")"
+    echo "$(colorir "amarelo" "#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#")"
+    echo "$(colorir "amarelo" "===========================================================================")"
+}
+
+function notify()
+{
+    local MENSAGEM=$1
+
+    if [[ -z "$2" ]]; then
+        local COR="azul"
+    else
+        local COR="$2"
+    fi
+
+    echo "$(colorir "$COR" "===========================================================================")"
+    echo "$(colorir "$COR" "###########################################################################")"
+    echo "$(colorir "$COR" "===========================================================================")"
+    echo ""
+    echo -e "$MENSAGEM"
+    echo ""
+    echo "$(colorir "$COR" "===========================================================================")"
+    echo "$(colorir "$COR" "###########################################################################")"
+    echo "$(colorir "$COR" "===========================================================================")"
+}
+
+function arte()
+{
+	local asciiart="$1"
+	local IFS=$'\n'
+	for line in $asciiart; do
+		echo "$line"
+	done
+	echo ""
+	echo ""
+}
+
+#// Executa um comando, analisando seu código de saída.
+function run()
+{
+    if [[ $_RUN_PROBLEM ]]; then
+        exibir_erro "ABORTANDO COMANDO DEVIDO FALHA PRÉVIA: $*"
+    else
+        "$@" || exibir_erro "Falha ao executar o comando: $*"
+    fi
+}
+
+#// Exibe o erro que ocorreu
+function exibir_erro()
+{
+    echo "$(colorir "vermelho", "Erro: $1")"
+}
+
+function text_in_file()
+{
+  TEXT_TO_SEARCH=$1
+  FILE_TO_SEARCH=$2
+
+  if [ -f $FILE_TO_SEARCH ]; then
+    cat $FILE_TO_SEARCH | grep "$TEXT_TO_SEARCH" > /dev/null 2>&1
+    return $?
+  else # file does not exist
+    return 1
+  fi
+}
+
+function log()
+{
+    local MENSAGEM=$1
+    local LOG_DESTINATION="${settings[LOG_PATH]}/${settings[LOG_NAME]}-$(date +%Y%m%d).log"
+    local LOG_TIMESTAMP="$(date +%Y/%m/%d\ %H:%M:%S.%N)"
+
+    echo -e "[$LOG_TIMESTAMP] $1" | tee -a $LOG_DESTINATION
+}
+
+TRACE="$(colorir "magenta" "[TRACE]")"
+DEBUG="$(colorir "ciano" "[DEBUG]")"
+INFO="$(colorir "verde" "[INFO ]")"
+WARN="$(colorir "amarelo" "[WARN ]")"
+ERROR="$(colorir "vermelho_claro" "[ERROR]")"
+CRITICAL="$(colorir "vermelho" "[FATAL]")"
+
+
+# TODO:
+# Mover isso de volta pro arquivo de instalação principal assim que finalizar.
+function generate_files
+{
+
+if ! $DRY; then
+    log "$INFO [${FUNCNAME[0]}] Gerando \"/tmp/inst1.txt\"..."
+cat > /tmp/inst1.txt <<EOF
+acl
+apr
+apr-util
+audit
+audit-libs
+authconfig
+autogen-libopts
+basesystem
+bash
+bind-libs-lite
+bind-license
+binutils
+biosdevname
+btrfs-progs
+bzip2-libs
+ca-certificates
+centos-logos
+centos-release
+chkconfig
+chrony
+compat-libtiff3
+coreutils
+cpio
+cracklib
+cracklib-dicts
+cronie
+cronie-noanacron
+crontabs
+cryptsetup-libs
+cups-libs
+curl
+cyrus-imapd
+cyrus-imapd-utils
+cyrus-sasl
+cyrus-sasl-lib
+cyrus-sasl-plain
+dbus
+dbus-glib
+dbus-libs
+dbus-python
+dhclient
+dhcp
+dhcp-common
+dhcp-libs
+dialog
+diffutils
+dmidecode
+dnsmasq
+dracut
+dracut-config-rescue
+dracut-network
+e2fsprogs
+e2fsprogs-libs
+ebtables
+elfutils-libelf
+elfutils-libs
+epel-release
+ethtool
+expat
+festival
+festival-lib
+festival-speechtools-libs
+festvox-slt-arctic-hts
+file
+file-libs
+filesystem
+findutils
+fipscheck
+fipscheck-lib
+firewalld
+flac-libs
+fprintd-pam
+fontconfig
+fontpackages-filesystem
+freetype
+fxload
+gawk
+gdbm
+gdbm-devel
+gettext
+gettext-libs
+ghostscript
+ghostscript-fonts
+git
+glib2
+glibc
+glibc-common
+glibc-devel
+glibc-headers
+glib-networking
+gmp
+gnupg2
+gnutls
+gobject-introspection
+gpgme
+gpm-libs
+grep
+groff-base
+grub2
+grub2-efi
+grub2-tools
+grubby
+gsettings-desktop-schemas
+gsm
+gzip
+hardlink
+hdparm
+hostname
+httpd
+httpd-tools
+hwdata
+info
+initscripts
+iproute
+iprutils
+iptables
+iptables-services
+iptables-devel
+iputils
+irqbalance
+jansson
+jbigkit-libs
+json-c
+kbd
+kbd-misc
+kernel
+kernel-devel
+kernel-headers
+kernel-tools
+kernel-tools-libs
+kexec-tools
+keyutils-libs
+kpartx
+krb5-libs
+lcms2
+less
+libacl
+libaio
+libao
+libassuan
+libasyncns
+libattr
+libblkid
+libcap
+libcap-ng
+libcom_err
+libcroco
+libcurl
+libdaemon
+libdb
+libdb-devel
+libdb-utils
+libdrm
+libedit
+libestr
+libffi
+libfontenc
+libgcc
+libgcrypt
+libgomp
+libgpg-error
+libgudev1
+libICE
+libidn
+libjpeg-turbo
+libmnl
+libmodman
+libmount
+libndp
+libnetfilter_conntrack
+libnfnetlink
+libnl3
+libnl3-cli
+libogg
+libpcap
+libpciaccess
+libpipeline
+libpng
+libproxy
+libpwquality
+libreport-filesystem
+libselinux
+libselinux-python
+libselinux-utils
+libsemanage
+libsepol
+libSM
+libsndfile
+libsoup
+libss
+libssh2
+libstdc++
+libsysfs
+libtasn1
+libteam
+libtiff
+libtiff-devel
+libtiff-tools
+libtool-ltdl
+libunistring
+libusb
+libusbx
+libuser
+libutempter
+libuuid
+libverto
+libvorbis
+libX11
+libX11-common
+libXau
+libxcb
+libXext
+libXfont
+libXi
+libxml2
+libXpm
+libxslt
+libXt
+libXtst
+libzip
+linux-firmware
+lm_sensors-libs
+lockdev
+logrotate
+lua
+lvm2
+lvm2-libs
+lzo
+mailcap
+mailman
+mailx
+make
+man-db
+mariadb
+mariadb-libs
+mariadb-server
+mdadm
+memtest86+
+mgetty
+microcode_ctl
+ModemManager-glib
+mod_ssl
+mokutil
+mozjs17
+mtools
+MySQL-python
+ncurses
+ncurses-base
+ncurses-libs
+net-snmp-agent-libs
+net-snmp-libs
+nettle
+net-tools
+newt
+newt-python
+nmap
+nmap-ncat
+nspr
+nss
+nss-softokn
+nss-softokn-freebl
+nss-sysinit
+nss-tools
+nss-util
+ntp
+ntpdate
+numactl-libs
+openldap
+openssh
+openssh-clients
+openssh-server
+openssl
+openssl-libs
+opus
+os-prober
+p11-kit
+p11-kit-trust
+pam
+parted
+passwd
+pciutils
+pciutils-libs
+pcre
+perl
+perl-Archive-Tar
+perl-Business-ISBN
+perl-Business-ISBN-Data
+perl-Carp
+perl-CGI
+perl-Compress-Raw-Bzip2
+perl-Compress-Raw-Zlib
+perl-constant
+perl-Crypt-OpenSSL-Bignum
+perl-Crypt-OpenSSL-Random
+perl-Crypt-OpenSSL-RSA
+perl-Data-Dumper
+perl-Date-Manip
+perl-DBD-MySQL
+perl-DB_File
+perl-DBI
+perl-devel
+perl-Digest
+perl-Digest-HMAC
+perl-Digest-MD5
+perl-Digest-SHA
+perl-Encode
+perl-Encode-Detect
+perl-Encode-Locale
+perl-Error
+perl-Exporter
+perl-ExtUtils-Install
+perl-ExtUtils-MakeMaker
+perl-ExtUtils-Manifest
+perl-ExtUtils-ParseXS
+perl-FCGI
+perl-File-Listing
+perl-File-Path
+perl-File-Temp
+perl-Filter
+perl-Getopt-Long
+perl-HTML-Parser
+perl-HTML-Tagset
+perl-HTTP-Cookies
+perl-HTTP-Daemon
+perl-HTTP-Date
+perl-HTTP-Message
+perl-HTTP-Negotiate
+perl-HTTP-Tiny
+perl-IO-Compress
+perl-IO-HTML
+perl-IO-Socket-INET6
+perl-IO-Socket-IP
+perl-IO-Socket-SSL
+perl-IO-Zlib
+perl-libs
+perl-libwww-perl
+perl-LWP-MediaTypes
+perl-macros
+perl-Mail-DKIM
+perl-Mail-IMAPClient
+perl-Mail-SPF
+perl-MailTools
+perl-NetAddr-IP
+perl-Net-Daemon
+perl-Net-DNS
+perl-Net-HTTP
+perl-Net-LibIDN
+perl-Net-SMTP-SSL
+perl-Net-SSLeay
+perl-Package-Constants
+perl-parent
+perl-Parse-RecDescent
+perl-PathTools
+perl-PlRPC
+perl-Pod-Escapes
+perl-podlators
+perl-Pod-Perldoc
+perl-Pod-Simple
+perl-Pod-Usage
+perl-Scalar-List-Utils
+perl-Socket
+perl-Socket6
+perl-Storable
+perl-Sys-Syslog
+perl-Test-Harness
+perl-Text-ParseWords
+perl-threads
+perl-threads-shared
+perl-TimeDate
+perl-Time-HiRes
+perl-Time-Local
+perl-URI
+perl-version
+perl-WWW-RobotRules
+php
+php-bcmath
+php-cli
+php-common
+php-gd
+php-imap
+php-mbstring
+php-mcrypt
+php-mysql
+php-pdo
+php-pear
+php-process
+php-soap
+php-tcpdf
+php-tidy
+php-xml
+pinentry
+pkgconfig
+plymouth
+plymouth-core-libs
+plymouth-scripts
+policycoreutils
+polkit
+polkit-pkla-compat
+poppler-data
+popt
+portreserve
+postfix
+postgresql-libs
+ppp
+procmail
+procps-ng
+psmisc
+pth
+pulseaudio-libs
+pygobject3-base
+pygpgme
+pyliblzma
+pyOpenSSL
+python
+python-backports
+python-backports-ssl_match_hostname
+python-configobj
+python-crypto
+python-decorator
+python-ecdsa
+python-iniparse
+python-libs
+python-lockfile
+python-pycurl
+python-pyudev
+python-setuptools
+python-six
+python-slip
+python-slip-dbus
+python-sqlalchemy
+python-tempita
+python-urlgrabber
+pytz
+pyxattr
+qrencode-libs
+readline
+rootfiles
+rpm
+rpm-build-libs
+rpm-libs
+rpm-python
+rsyslog
+sed
+selinux-policy
+selinux-policy-targeted
+setup
+shadow-utils
+shared-mime-info
+sharutils
+shim
+shim-unsigned
+slang
+snappy
+sox
+spamassassin
+spandsp
+spandsp-devel
+speex
+sqlite
+sudo
+syslinux
+systemd
+systemd-libs
+systemd-sysv
+systemtap-sdt-devel
+sysvinit-tools
+t1lib
+tar
+tcp_wrappers-libs
+teamd
+tftp-server
+tuned
+tzdata
+unixODBC
+urw-fonts
+ustr
+util-linux
+uuid
+uuid-perl
+vim-common
+vim-enhanced
+vim-filesystem
+vim-minimal
+virt-what
+vsftpd
+wavpack
+which
+wpa_supplicant
+xfsprogs
+xinetd
+xorg-x11-font-utils
+xz
+xz-libs
+yum
+yum-metadata-parser
+yum-plugin-fastestmirror
+zlib
+pv
+unzip
+certbot
+python2-certbot
+python2-certbot-apache
+EOF
+
+    log "$INFO [${FUNCNAME[0]}] Gerando \"/tmp/inst2.txt\"..."
+cat > /tmp/inst2.txt <<EOF
+acl
+aic94xx-firmware
+alsa-firmware
+alsa-lib
+alsa-tools-firmware
+apr
+apr-util
+asterisk$ASTVER
+asterisk$ASTVER-devel
+asterisk-codec-g729
+asterisk-perl
+asterisk-es-sounds
+asterisk-fr-sounds
+asterisk-sounds-en-gsm
+asterisk-pt_BR-sounds
+audit
+audit-libs
+authconfig
+autogen-libopts
+avahi
+avahi-autoipd
+avahi-libs
+basesystem
+bash
+bind-libs-lite
+bind-license
+binutils
+biosdevname
+btrfs-progs
+bzip2-libs
+ca-certificates
+centos-logos
+centos-release
+chkconfig
+chrony
+compat-libtiff3
+coreutils
+cpio
+cracklib
+cracklib-dicts
+cronie
+cronie-noanacron
+crontabs
+cryptsetup-libs
+cups-libs
+curl
+cyrus-imapd
+cyrus-imapd-utils
+cyrus-sasl
+cyrus-sasl-lib
+cyrus-sasl-plain
+dahdi
+dahdi-linux
+dbus
+dbus-glib
+dbus-libs
+dbus-python
+device-mapper
+device-mapper-event
+device-mapper-event-libs
+device-mapper-libs
+device-mapper-persistent-data
+dhclient
+dhcp
+dhcp-common
+dhcp-libs
+dialog
+diffutils
+dmidecode
+dnsmasq
+dracut
+dracut-config-rescue
+dracut-network
+e2fsprogs
+e2fsprogs-libs
+ebtables
+htop
+issabel-system
+issabel-framework
+issabel-framework-themes-extra
+issabel-addons
+issabel-agenda
+issabel-asterisk-sounds
+issabel-email_admin
+issabel-endpointconfig2
+issabel-extras
+issabel-fax
+issabel-firstboot
+issabel-license
+issabel-my_extension
+issabel-pbx
+issabel-portknock
+issabel-reports
+issabel-security
+issabel-prosody-auth
+elfutils-libelf
+elfutils-libs
+epel-release
+ethtool
+expat
+festival
+festival-lib
+festival-speechtools-libs
+festvox-slt-arctic-hts
+file
+file-libs
+filesystem
+findutils
+fipscheck
+fipscheck-lib
+firewalld
+flac-libs
+fontconfig
+fontpackages-filesystem
+freetype
+fxload
+gawk
+gdbm
+gdbm-devel
+gettext
+gettext-libs
+ghostscript
+ghostscript-fonts
+glib2
+glibc
+glibc-common
+glibc-devel
+glibc-headers
+glib-networking
+gmp
+gnupg2
+gnutls
+gobject-introspection
+gpgme
+gpm-libs
+grep
+groff-base
+grub2
+grub2-efi
+grub2-tools
+grubby
+gsettings-desktop-schemas
+gsm
+gzip
+hardlink
+hdparm
+hostname
+httpd
+httpd-tools
+hwdata
+hylafax
+iaxmodem
+iksemel
+info
+initscripts
+iproute
+iprutils
+iptables
+iptables-services
+iptables-devel
+iputils
+irqbalance
+ivtv-firmware
+iwl1000-firmware
+iwl100-firmware
+iwl105-firmware
+iwl135-firmware
+iwl2000-firmware
+iwl2030-firmware
+iwl3160-firmware
+iwl3945-firmware
+iwl4965-firmware
+iwl5000-firmware
+iwl5150-firmware
+iwl6000-firmware
+iwl6000g2a-firmware
+iwl6000g2b-firmware
+iwl6050-firmware
+iwl7260-firmware
+jansson
+jbigkit-libs
+json-c
+kbd
+kbd-misc
+kernel
+kernel-devel
+kernel-headers
+kernel-tools
+kernel-tools-libs
+kexec-tools
+keyutils-libs
+kpartx
+krb5-libs
+lcdissabel
+lcdproc
+lcms2
+less
+libacl
+libaio
+liballogsmat
+libao
+libassuan
+libasyncns
+libattr
+libblkid
+libcap
+libcap-ng
+libc-client
+libcom_err
+libcroco
+libcurl
+libdaemon
+libdb
+libdb-devel
+libdb-utils
+libdrm
+libedit
+libertas-sd8686-firmware
+libertas-sd8787-firmware
+libertas-usb8388-firmware
+libestr
+libffi
+libfontenc
+libgcc
+libgcrypt
+libgomp
+libgpg-error
+libgsmat
+libgudev1
+libICE
+libidn
+libjpeg-turbo
+libmcrypt
+libmnl
+libmodman
+libmount
+libndp
+libnetfilter_conntrack
+libnfnetlink
+libnl3
+libnl3-cli
+libogg
+libopenr2
+libpcap
+libpciaccess
+libpipeline
+libpng
+libpri
+libproxy
+libpwquality
+libreport-filesystem
+libselinux
+libselinux-python
+libselinux-utils
+libsemanage
+libsepol
+libSM
+libsndfile
+libsoup
+libsrtp
+libss
+libss7
+libssh2
+libstdc++
+libsysfs
+libtasn1
+libteam
+libtidy
+libtiff
+libtiff-devel
+libtiff-tools
+libtool-ltdl
+libunistring
+libusb
+libusbx
+libuser
+libutempter
+libuuid
+libverto
+libvorbis
+libwat
+libX11
+libX11-common
+libXau
+libxcb
+libXext
+libXfont
+libXi
+libxml2
+libXpm
+libxslt
+libXt
+libXtst
+libzip
+linux-firmware
+lm_sensors-libs
+lockdev
+logrotate
+lua
+lvm2
+lvm2-libs
+lzo
+mailcap
+mailman
+make
+man-db
+mariadb
+mariadb-libs
+mariadb-server
+mdadm
+memtest86+
+mgetty
+microcode_ctl
+ModemManager-glib
+mod_ssl
+mokutil
+mozjs17
+mtools
+MySQL-python
+mysql-to-mariadb-server
+ncurses
+ncurses-base
+ncurses-libs
+net-snmp-agent-libs
+net-snmp-libs
+nettle
+net-tools
+newt
+newt-python
+nmap
+nmap-ncat
+nspr
+nss
+nss-softokn
+nss-softokn-freebl
+nss-sysinit
+nss-tools
+nss-util
+ntp
+ntpdate
+numactl-libs
+openldap
+openssh
+openssh-clients
+openssh-server
+openssl
+openssl-libs
+opus
+os-prober
+p11-kit
+p11-kit-trust
+pam
+parted
+passwd
+pciutils
+pciutils-libs
+pcre
+perl
+perl-Archive-Tar
+perl-Business-ISBN
+perl-Business-ISBN-Data
+perl-Carp
+perl-CGI
+perl-Compress-Raw-Bzip2
+perl-Compress-Raw-Zlib
+perl-constant
+perl-Convert-BinHex
+perl-Crypt-OpenSSL-Bignum
+perl-Crypt-OpenSSL-Random
+perl-Crypt-OpenSSL-RSA
+perl-Data-Dumper
+perl-Date-Manip
+perl-DBD-MySQL
+perl-DB_File
+perl-DBI
+perl-devel
+perl-Digest
+perl-Digest-HMAC
+perl-Digest-MD5
+perl-Digest-SHA
+perl-Encode
+perl-Encode-Detect
+perl-Encode-Locale
+perl-Error
+perl-Exporter
+perl-ExtUtils-Install
+perl-ExtUtils-MakeMaker
+perl-ExtUtils-Manifest
+perl-ExtUtils-ParseXS
+perl-FCGI
+perl-File-Listing
+perl-File-Path
+perl-File-Temp
+perl-Filter
+perl-Getopt-Long
+perl-HTML-Parser
+perl-HTML-Tagset
+perl-HTTP-Cookies
+perl-HTTP-Daemon
+perl-HTTP-Date
+perl-HTTP-Message
+perl-HTTP-Negotiate
+perl-HTTP-Tiny
+perl-IO-Compress
+perl-IO-HTML
+perl-IO-Socket-INET6
+perl-IO-Socket-IP
+perl-IO-Socket-SSL
+perl-IO-Zlib
+perl-libs
+perl-libwww-perl
+perl-LWP-MediaTypes
+perl-macros
+perl-Mail-DKIM
+perl-Mail-IMAPClient
+perl-Mail-SPF
+perl-MailTools
+perl-MIME-tools
+perl-NetAddr-IP
+perl-Net-Daemon
+perl-Net-DNS
+perl-Net-HTTP
+perl-Net-LibIDN
+perl-Net-SMTP-SSL
+perl-Net-SSLeay
+perl-Package-Constants
+perl-parent
+perl-Parse-RecDescent
+perl-PathTools
+perl-PlRPC
+perl-Pod-Escapes
+perl-podlators
+perl-Pod-Perldoc
+perl-Pod-Simple
+perl-Pod-Usage
+perl-Scalar-List-Utils
+perl-Socket
+perl-Socket6
+perl-Storable
+perl-Sys-Syslog
+perl-Test-Harness
+perl-Text-ParseWords
+perl-threads
+perl-threads-shared
+perl-TimeDate
+perl-Time-HiRes
+perl-Time-Local
+perl-URI
+perl-version
+perl-WWW-RobotRules
+php
+php-bcmath
+php-cli
+php-common
+php-gd
+php-IDNA_Convert
+php-imap
+php-jpgraph
+php-magpierss
+php-mbstring
+php-mcrypt
+php-mysql
+php-pdo
+php-pear
+php-pear-DB
+php-PHPMailer
+php-process
+php-simplepie
+php-Smarty
+php-soap
+php-tcpdf
+php-tidy
+php-xml
+pinentry
+pkgconfig
+plymouth
+plymouth-core-libs
+plymouth-scripts
+policycoreutils
+polkit
+polkit-pkla-compat
+poppler-data
+popt
+portreserve
+postfix
+postgresql-libs
+ppp
+procmail
+procps-ng
+psmisc
+pth
+pulseaudio-libs
+py-Asterisk
+pygobject3-base
+pygpgme
+pyliblzma
+pyOpenSSL
+python
+python-backports
+python-backports-ssl_match_hostname
+python-cjson
+python-configobj
+python-crypto
+python-daemon
+python-decorator
+python-ecdsa
+python-eventlet
+python-greenlet
+python-iniparse
+python-libs
+python-lockfile
+python-paramiko
+python-pycurl
+python-pyudev
+python-setuptools
+python-six
+python-slip
+python-slip-dbus
+python-sqlalchemy
+python-tempita
+python-urlgrabber
+pytz
+pyxattr
+qrencode-libs
+readline
+rhino
+rootfiles
+RoundCubeMail
+rpm
+rpm-build-libs
+rpm-libs
+rpm-python
+rsyslog
+sed
+selinux-policy
+selinux-policy-targeted
+setup
+shadow-utils
+shared-mime-info
+sharutils
+shim
+shim-unsigned
+slang
+snappy
+sox
+spamassassin
+spandsp
+spandsp-devel
+speex
+sqlite
+sudo
+syslinux
+systemd
+systemd-libs
+systemd-sysv
+systemtap-sdt-devel
+sysvinit-tools
+t1lib
+tar
+tcp_wrappers-libs
+teamd
+tftp-server
+traceroute
+tuned
+tzdata
+unixODBC
+urw-fonts
+ustr
+util-linux
+uuid
+uuid-perl
+vim-common
+vim-enhanced
+vim-filesystem
+vim-minimal
+virt-what
+vsftpd
+wavpack
+which
+wpa_supplicant
+xfsprogs
+xinetd
+xorg-x11-font-utils
+xz
+xz-libs
+yum
+yum-metadata-parser
+yum-plugin-fastestmirror
+zlib
+gcc
+gcc-c++
+automake
+unzip
+pv
+zip
+wget
+iptables-devel
+perl-Text-CSV_XS
+certbot
+python2-certbot
+python2-certbot-apache
+xtables-addons
+EOF
+fi
+
+}
+
+function render_loading_bar {
+    local _PROGRESSO=$1 # Pacotes instalados
+    local _TOTAL=$2     # Pacotes à serem instalados
+    local _MUTE=$3
+
+    # Em INTEGER, quantos _LOADING_BAR_PROGRESS_CHARACTER devem ser inseridos. Baaseado na quantidade de pacotes, e no limite (tamanho total) da barra de carregamento.
+    local CURRENT_PROGRESS=$(( ($_PROGRESSO * $_PROGRESS_LIMIT) / $_TOTAL ))
+
+    # Definindo se, pro tamanho da lista, a quantidade de progresso está ultrapassando ou não esse limite.
+    if [[ $CURRENT_PROGRESS -gt $_PROGRESS_LIMIT ]]; then
+        if ! [ $_MUTE ]; then
+            log "${FUNCNAME[0]} $WARN Overflow da barra de loading! O progresso atual excede o limite!"
+        fi
+        local OVERFLOW_SIGNAL=" [!]"
+        local CURRENT_PROGRESS=$_PROGRESS_LIMIT
+    elif [[ $_PROGRESSO -gt $_TOTAL ]]; then
+        if ! [ $_MUTE ]; then
+            log "${FUNCNAME[0]} $WARN Overflow da barra de loading! O progresso atual é maior que o total!"
+        fi
+        local OVERFLOW_SIGNAL=" [?]"
+    fi
+
+    # Adicionando as partes com progresso
+    for (( i=0; i<$CURRENT_PROGRESS; i++ )); do
+        local current_loading_bar+="$_LOADING_BAR_PROGRESS_CHARACTER"
+    done
+
+    # Adicionando as partes sem progresso
+    while [[ ${#current_loading_bar} -lt $_PROGRESS_LIMIT ]]; do
+        local current_loading_bar+="$_LOADING_BAR_NO_PROGRESS_CHARACTER"
+    done
+
+    echo "$_LOADING_BAR_START$current_loading_bar$_LOADING_BAR_END$OVERFLOW_SIGNAL"
+}
