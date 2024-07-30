@@ -10,7 +10,7 @@ Este script tem a intenção de remover o menu interativo do Netinstall padrão 
 # Instalação
 
 ```sh
-git clone https://github.com/adriankubinyete/px-netinstall.git
+git clone https://github.com/PhonevoxGroupTechnology/px-netinstall.git
 cd px-netinstall
 chmod +x install.sh
 ./install.sh --help
