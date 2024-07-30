@@ -3,7 +3,7 @@ function px_custom_add_theme()
     log "$TRACE ${FUNCNAME[0]}: starting..."
 
     # Repositório
-    local REPOSITORY_OWNER="adriankubinyete"
+    local REPOSITORY_OWNER="PhonevoxGroupTechnology"
     local REPOSITORY_NAME="px-issabel-theme"
     local REPOSITORY_URL="https://github.com/$REPOSITORY_OWNER/$REPOSITORY_NAME.git"
     local BASE_PATH="$CURRDIR/github/$REPOSITORY_NAME"
@@ -37,7 +37,7 @@ function px_custom_add_user_rating()
     log "$TRACE ${FUNCNAME[0]}: starting..."
 
     # Repositório
-    local REPOSITORY_OWNER="adriankubinyete"
+    local REPOSITORY_OWNER="PhonevoxGroupTechnology"
     local REPOSITORY="px-avaliacao-atendimento"
     local REPOSITORY_URL="https://github.com/$REPOSITORY_OWNER/$REPOSITORY.git"
     local BASE_PATH="$CURRDIR/github/$REPOSITORY"
@@ -83,7 +83,7 @@ function px_custom_add_backupengine()
     log "$TRACE ${FUNCNAME[0]}: starting..."
 
     # Repositório
-    local REPOSITORY_OWNER="adriankubinyete"
+    local REPOSITORY_OWNER="PhonevoxGroupTechnology"
     local REPOSITORY="px-edit-issabel-backup-engine"
     local REPOSITORY_URL="https://github.com/$REPOSITORY_OWNER/$REPOSITORY.git"
     local BASE_PATH="$CURRDIR/github/$REPOSITORY"
@@ -117,7 +117,7 @@ function px_custom_add_siptracer()
     log "$TRACE ${FUNCNAME[0]}: starting..."
 
     # Repositório
-    local REPOSITORY_OWNER="adriankubinyete"
+    local REPOSITORY_OWNER="PhonevoxGroupTechnology"
     local REPOSITORY="px-siptracer"
     local REPOSITORY_URL="https://github.com/$REPOSITORY_OWNER/$REPOSITORY.git"
     local BASE_PATH="$CURRDIR/github/$REPOSITORY"
@@ -250,7 +250,7 @@ function px_fix_monitoring_class()
     log "$TRACE ${FUNCNAME[0]}: starting..."
 
     # Repositório
-    local REPOSITORY_OWNER="adriankubinyete"
+    local REPOSITORY_OWNER="PhonevoxGroupTechnology"
     local REPOSITORY="px-edit-issabel-backup-engine"
     local REPOSITORY_URL="https://github.com/$REPOSITORY_OWNER/$REPOSITORY.git"
     local BASE_PATH="$CURRDIR/github/$REPOSITORY"

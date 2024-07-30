@@ -178,17 +178,17 @@ function process_args()
                 add_arg "community_blocklist" true
                 
                 # Edits
-                add_arg "falevox_theme" true #https://github.com/adriankubinyete/px-issabel-theme
-                add_arg "custom_backupengine" true #https://github.com/adriankubinyete/px-edit-issabel-backup-engine
+                add_arg "falevox_theme" true
+                add_arg "custom_backupengine" true
                 
                 # Fixs
                 add_arg "yum_vault" true # Fix CentOS 7 Repository Mirrors for Yum.
-                add_arg "fix_monitoring_class" true #https://github.com/adriankubinyete/px-fix-monitoring-class
+                add_arg "fix_monitoring_class" true
                 add_arg "php_timezone" "America/Sao_Paulo"
                 #add_arg "firewall" true # Não sei como vou implementar isso sem deixar nossos IPs expostos kk
                 
                 # Features
-                add_arg "siptracer" true #https://github.com/adriankubinyete/px-siptracer
+                add_arg "siptracer" true
 
                 # Backup para upload automático
                 # add_arg "import" "basic"
