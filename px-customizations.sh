@@ -109,9 +109,11 @@ function px_custom_add_backupengine()
 
     log "$TRACE [${FUNCNAME[0]}] backupengine"
     cp $ISSABEL_PRIVILEGED/backupengine $BASE_PATH/files/backupengine.bkp
+    chmod 755 $BASE_PATH/files/backupengine && chown root:root $BASE_PATH/files/backupengine
     mv -fv $BASE_PATH/files/backupengine $ISSABEL_PRIVILEGED/backupengine
 
     log "$TRACE [${FUNCNAME[0]}] pvx-backupengine-extras"
+    chmod 755 $BASE_PATH/files/pvx-backupengine-extras && chown root:root $BASE_PATH/files/pvx-backupengine-extras
     mv -fv $BASE_PATH/files/pvx-backupengine-extras $ISSABEL_PRIVILEGED/pvx-backupengine-extras
 
     log "$TRACE [${FUNCNAME[0]}] Limpando \"$BASE_PATH\"..."
