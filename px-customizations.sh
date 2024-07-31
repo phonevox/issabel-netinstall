@@ -261,7 +261,7 @@ function px_fix_monitoring_class()
 
     # Repositório
     local REPOSITORY_OWNER="PhonevoxGroupTechnology"
-    local REPOSITORY_NAME="px-edit-issabel-backup-engine"
+    local REPOSITORY_NAME="px-fix-monitoring-class"
     local REPOSITORY_URL="https://github.com/$REPOSITORY_OWNER/$REPOSITORY_NAME/archive/refs/heads/main.tar.gz"
     local BASE_PATH="$CURRDIR/$REPOSITORY_NAME"
 
@@ -319,7 +319,7 @@ function px_fix_dialpattern_wizard()
 
     # Repositório
     local REPOSITORY_OWNER="PhonevoxGroupTechnology"
-    local REPOSITORY_NAME="px-edit-issabel-backup-engine"
+    local REPOSITORY_NAME="px-edit-dialpattern-wizard"
     local REPOSITORY_URL="https://github.com/$REPOSITORY_OWNER/$REPOSITORY_NAME/archive/refs/heads/main.tar.gz"
     local BASE_PATH="$CURRDIR/$REPOSITORY_NAME"
 
