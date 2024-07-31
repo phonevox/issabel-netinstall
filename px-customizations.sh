@@ -140,8 +140,37 @@ function px_custom_add_siptracer()
     log "$TRACE [${FUNCNAME[0]}] Puxando o repositório para $BASE_PATH..."
     curl -sL $REPOSITORY_URL | tar xz --transform="s,^[^/]*,$REPOSITORY_NAME,"
 
-    log "$TRACE [${FUNCNAME[0]}] $(colorir "amarelo" "Iniciando o instalador do siptracer")"
-    ./$BASE_PATH/install.sh
+    # Verifica se o script está sendo executado como root
+    if [ "$(id -u)" -ne 0 ]; then
+        log "$FATAL [${FUNCNAME[0]}] Este script deve ser executado como root."
+        return 1
+    fi
+
+    # Verifica se o diretório e o arquivo existem
+    if [ ! -f "$BASE_PATH/files/siptracer.sh" ]; then
+        log "$FATAL [${FUNCNAME[0]}] Arquivo siptracer.sh não encontrado em $BASE_PATH/files."
+        return 1
+    fi
+
+    # Verifica se /usr/sbin é acessível e permite escrita
+    if [ ! -w "/usr/sbin" ]; then
+        log "$FATAL [${FUNCNAME[0]}] Sem permissão de escrita em /usr/sbin."
+        return 1
+    fi
+
+    # Move o arquivo
+    mv "$BASE_PATH/files/siptracer.sh" "/usr/sbin/siptracer"
+    if [ $? -ne 0 ]; then
+        log "$FATAL [${FUNCNAME[0]}] Falha ao mover o arquivo."
+        return 1
+    fi
+
+    # Define as permissões do arquivo
+    chmod 755 "/usr/sbin/siptracer"
+    if [ $? -ne 0 ]; then
+        log "$FATAL [${FUNCNAME[0]}] Falha ao definir as permissões do arquivo."
+        return 1
+    fi
 
     log "$TRACE [${FUNCNAME[0]}] Limpando \"$BASE_PATH\"..."
     rm -rf $BASE_PATH # Por limpeza, removo a pasta do módulo
