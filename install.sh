@@ -331,6 +331,9 @@ function settings
         read -p "Defina a senha admin da interface WEB: " webpassword
         args[web_password]="$webpassword"
     fi
+
+    MYSQL_ROOT_PASSWORD="${args[sql_password]}"
+    WEB_ADMIN_PASSWORD="${args[web_password]}"
 }
 
 function welcome
