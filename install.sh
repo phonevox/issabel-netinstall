@@ -50,6 +50,7 @@ function show_help()
     echo '  --firewall                             Automaticamente cria as regras de firewall da Phonevox.'
     echo '  --custom-backup-engine                 Instala a modificação/customização da backupengine pela Phonevox.'
     echo '  --fix-monitoring-class                 Instala a customização da classe do módulo de monitoramento do Issabel, para assumir "astspooldir" ao baixar as gravações.'
+    echo '  --fix-dialpatterns                     Edita as dialpatterns nas páginas de TRONCO e SAÍDA para os padrões da Phonevox.'
     echo '  --siptracer                            Instala a aplicação "siptracer", criada pela Phonevox para gerar arquivos .pcap em segundo plano.'
     echo '  --php-timezone="<STRING>"              Define a timezone do PHP.'
     echo '  --quicksetup                           Flag para configuração rápida, automaticamente instalando módulos comuns.'
@@ -155,6 +156,10 @@ function process_args()
             --fix-monitoring-class)
                 NEEDS_SCP=true
                 add_arg "fix_monitoring_class" true
+            ;;
+
+            --fix-dialpatterns)
+                add_arg "fix_dialpattern_wizard" true
             ;;
             
             --php-timezone=*)
@@ -672,10 +677,11 @@ function phonevox_customizations
     if [ ${args[custom_backupengine]} ]; then px_custom_add_backupengine ; fi
     if [ ${args[siptracer]} ]; then px_custom_add_siptracer ; fi
     if [ ${args[zoxide]} ]; then px_custom_add_zoxide ; fi
-
+    
     # Fixes
     log "$INFO [${FUNCNAME[0]}] ===> $(colorir "ciano" "CORREÇÕES") <==="
     if [ ${args[fix_monitoring_class]} ]; then px_fix_monitoring_class; fi
+    if [ ${args[fix_dialpattern_wizard]} ]; then px_fix_dialpattern_wizard ; fi
     if [ ${args[php_timezone]} ]; then px_fix_set_php_timezone; fi
 }
 
