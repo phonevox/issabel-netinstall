@@ -1,6 +1,6 @@
 function px_custom_add_theme()
 {
-    log "$TRACE ${FUNCNAME[0]}: starting..."
+    log "$INFO ${FUNCNAME[0]}: starting..."
 
     # Repositório
     local REPOSITORY_OWNER="PhonevoxGroupTechnology"
@@ -35,7 +35,7 @@ function px_custom_add_user_rating()
 {
     # Requer setting: LOGIN_MOD_AVALIACAO
 
-    log "$TRACE ${FUNCNAME[0]}: starting..."
+    log "$INFO ${FUNCNAME[0]}: starting..."
 
     # Repositório
     local REPOSITORY_OWNER="PhonevoxGroupTechnology"
@@ -84,7 +84,7 @@ function px_custom_add_backupengine()
     # TODO:
     # Mover os ".bkp" para outro lugar, já que estou salvando na pasta que está sendo deletada.
 
-    log "$TRACE ${FUNCNAME[0]}: starting..."
+    log "$INFO ${FUNCNAME[0]}: starting..."
 
     # Repositório
     local REPOSITORY_OWNER="PhonevoxGroupTechnology"
@@ -121,7 +121,7 @@ function px_custom_add_backupengine()
 
 function px_custom_add_siptracer()
 {
-    log "$TRACE ${FUNCNAME[0]}: starting..."
+    log "$INFO ${FUNCNAME[0]}: starting..."
 
     # Repositório
     local REPOSITORY_OWNER="PhonevoxGroupTechnology"
@@ -142,7 +142,7 @@ function px_custom_add_siptracer()
 
 function px_custom_add_zabbix()
 {
-    log "$TRACE ${FUNCNAME[0]}: starting..."
+    log "$INFO ${FUNCNAME[0]}: starting..."
 
     warn "Este módulo (add_zabbix) está DESATUALIZADO. Não recomendamos sua utilização!"
 
@@ -196,7 +196,7 @@ function px_custom_add_firewall()
 {
     # Requer setting: FIREWALL_WHITELIST_IPS
 
-    log "$TRACE ${FUNCNAME[0]}: starting..."
+    log "$INFO ${FUNCNAME[0]}: starting..."
 
     if ! grep -q "bash /etc/firewall.sh" "/etc/rc.d/rc.local"; then
 
@@ -232,7 +232,7 @@ EOF
 
 function px_custom_add_zoxide()
 {
-    log "$TRACE ${FUNCNAME[0]}: starting..."
+    log "$INFO ${FUNCNAME[0]}: starting..."
 
     log "$TRACE [${FUNCNAME[0]}] Instalando git"
     run sudo yum install -y git 
@@ -257,7 +257,7 @@ function px_custom_add_zoxide()
 
 function px_fix_monitoring_class()
 {
-    log "$TRACE ${FUNCNAME[0]}: starting..."
+    log "$INFO ${FUNCNAME[0]}: starting..."
 
     # Repositório
     local REPOSITORY_OWNER="PhonevoxGroupTechnology"
@@ -299,7 +299,7 @@ function px_fix_set_php_timezone()
 {
     # Requer setting: PHP_INI_PATH
 
-    log "$TRACE ${FUNCNAME[0]}: starting..."
+    log "$INFO ${FUNCNAME[0]}: starting..."
 
     if [ ${settings[PHP_INI_PATH]} ]; then
         log "$TRACE [${FUNCNAME[0]}] Caminho até \"php.ini\": ${settings[PHP_INI_PATH]}"
@@ -315,7 +315,7 @@ function px_fix_set_php_timezone()
 
 function px_fix_dialpattern_wizard()
 {
-    log "$TRACE ${FUNCNAME[0]}: starting..."
+    log "$INFO ${FUNCNAME[0]}: starting..."
 
     # Repositório
     local REPOSITORY_OWNER="PhonevoxGroupTechnology"
