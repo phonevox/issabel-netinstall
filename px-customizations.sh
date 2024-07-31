@@ -28,7 +28,7 @@ function px_custom_add_theme()
     mv -fv $BASE_PATH/falevox $PATH_THEMES # Movo o tema
 
     log "$TRACE [${FUNCNAME[0]}] Limpando \"$BASE_PATH\""
-    rm -rfv $BASE_PATH # Por limpeza, removo a pasta de tema.
+    rm -rf $BASE_PATH # Por limpeza, removo a pasta de tema.
 }
 
 function px_custom_add_user_rating()
@@ -71,25 +71,17 @@ function px_custom_add_user_rating()
     fi
     
     # Atualizando a senha pra conexão do db
-
-    if $FORCE_DEBUG_MODE; then
-        echo "MYSQL ROOT PASSWORD : $MYSQL_ROOT_PASSWORD"
-    fi
-    
-    #agi
-    sed -i "s/SENHA_DO_DATABASE/$MYSQL_ROOT_PASSWORD/g" $DIR_AST_AGI/phonevox-customs/insert_note.php
-
-    #voxura
-    sed -i "s/SENHA_DO_DATABASE/$MYSQL_ROOT_PASSWORD/g" $DIR_HTML/voxura/recording.php
-    sed -i "s/SENHA_DO_DATABASE/$MYSQL_ROOT_PASSWORD/g" $DIR_HTML/voxura/conn.inc.php
-    sed -i "s/SENHA_DO_DATABASE/$MYSQL_ROOT_PASSWORD/g" $DIR_HTML/voxura/config.php
+    sed -i "s/SENHA_DO_DATABASE/$MYSQL_ROOT_PASSWORD/g" $DIR_AST_AGI/phonevox-customs/insert_note.php # agi
+    sed -i "s/SENHA_DO_DATABASE/$MYSQL_ROOT_PASSWORD/g" $DIR_HTML/voxura/recording.php # voxura
+    sed -i "s/SENHA_DO_DATABASE/$MYSQL_ROOT_PASSWORD/g" $DIR_HTML/voxura/conn.inc.php # voxura
+    sed -i "s/SENHA_DO_DATABASE/$MYSQL_ROOT_PASSWORD/g" $DIR_HTML/voxura/config.php # voxura
 
     # "Registrando" a existência do módulo
     log "$TRACE [${FUNCNAME[0]}] Registrando o módulo..."
     echo -e 'mod-avaliacao-atendimento' | sudo tee -a $DIR_AST_EXTENSIONS/phonevox-customs/modules.conf > /dev/null 2>&1
     
     log "$TRACE [${FUNCNAME[0]}] Limpando \"$BASE_PATH\"..."
-    rm -rfv $BASE_PATH # Por limpeza, removo a pasta do módulo
+    rm -rf $BASE_PATH # Por limpeza, removo a pasta do módulo
 
 }
 
@@ -131,7 +123,7 @@ function px_custom_add_backupengine()
     mv -fv $BASE_PATH/files/pvx-backupengine-extras $ISSABEL_PRIVILEGED/pvx-backupengine-extras
 
     log "$TRACE [${FUNCNAME[0]}] Limpando \"$BASE_PATH\"..."
-    rm -rfv $BASE_PATH # Por limpeza, removo a pasta do módulo
+    rm -rf $BASE_PATH # Por limpeza, removo a pasta do módulo
 
 }
 
@@ -152,7 +144,7 @@ function px_custom_add_siptracer()
     ./$BASE_PATH/install.sh
 
     log "$TRACE [${FUNCNAME[0]}] Limpando \"$BASE_PATH\"..."
-    rm -rfv $BASE_PATH # Por limpeza, removo a pasta do módulo
+    rm -rf $BASE_PATH # Por limpeza, removo a pasta do módulo
 
 }
 
@@ -307,7 +299,7 @@ function px_fix_monitoring_class()
     fi
 
     log "$TRACE [${FUNCNAME[0]}] Limpando \"$BASE_PATH\"..."
-    rm -rfv $BASE_PATH # Por limpeza, removo a pasta do módulo
+    rm -rf $BASE_PATH # Por limpeza, removo a pasta do módulo
 
 }
 
@@ -346,6 +338,6 @@ function px_fix_dialpattern_wizard()
     ./$BASE_PATH/install.sh
 
     log "$TRACE [${FUNCNAME[0]}] Limpando \"$BASE_PATH\"..."
-    rm -rfv $BASE_PATH # Por limpeza, removo a pasta do módulo
+    rm -rf $BASE_PATH # Por limpeza, removo a pasta do módulo
 
 }
