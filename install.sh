@@ -665,13 +665,13 @@ function phonevox_customizations
 
     # Edits / Adds
     log "$INFO [${FUNCNAME[0]}] ===> $(colorir "ciano" "ADIÇÕES") <==="
-    if [ ${args[falevox_theme]}]; then px_custom_add_theme ; fi
-    if [ ${args[mod_avaliacao]}]; then px_custom_add_user_rating ; fi
-    if [ ${args[zabbix]}]; then px_custom_add_zabbix ; fi
-    if [ ${args[firewall]}]; then px_custom_add_firewall ; fi
-    if [ ${args[custom_backupengine]}]; then px_custom_add_backupengine ; fi
-    if [ ${args[siptracer]}]; then px_custom_add_siptracer ; fi
-    if [ ${args[zoxide]}]; then px_custom_add_zoxide ; fi
+    if [ ${args[falevox_theme]} ]; then px_custom_add_theme ; fi
+    if [ ${args[mod_avaliacao]} ]; then px_custom_add_user_rating ; fi
+    if [ ${args[zabbix]} ]; then px_custom_add_zabbix ; fi
+    if [ ${args[firewall]} ]; then px_custom_add_firewall ; fi
+    if [ ${args[custom_backupengine]} ]; then px_custom_add_backupengine ; fi
+    if [ ${args[siptracer]} ]; then px_custom_add_siptracer ; fi
+    if [ ${args[zoxide]} ]; then px_custom_add_zoxide ; fi
 
     # Fixes
     log "$INFO [${FUNCNAME[0]}] ===> $(colorir "ciano" "CORREÇÕES") <==="
