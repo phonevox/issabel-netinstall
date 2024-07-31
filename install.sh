@@ -679,39 +679,6 @@ function phonevox_customizations
     if [ ${args[php_timezone]} ]; then px_fix_set_php_timezone; fi
 }
 
-
-function install_extras
-{
-    # Determinando os argumentos extras que foram repassados, e instalando-os
-    # if ${args[arg]}; then function; fi
-
-    START_COLOR="rosa" # Cor que será usada para avisar que uma ADIÇÃO/FIX está iniciando
-
-    # Adições
-    log "$(colorir "ciano_claro" "# # # Alterações FALEVOX # # #")"
-    if ${args[falevox_theme]}; then add_theme; fi
-    if ${args[mod_avaliacao]}; then add_mod_avaliacao; fi
-    if ${args[zabbix]}; then add_zabbix_host; fi
-    if ${args[firewall]}; then add_firewall_script; fi
-    if ${args[custom_backupengine]}; then add_custom_backupengine; fi
-    if ${args[siptracer]}; then add_siptracer; fi
-
-    if ${args[zoxide]}; then
-        echo "args zoxide: ${args[zoxide]}"
-        echo "zoxide será instalado"
-    fi
-    
-    # if ${args[zoxide]}; then install_zoxide; fi
-    if [ -n ${args[import]} ]; then do_issabel_import; fi                                # Sobe o backup.
-    log "$(colorir "ciano_claro" "# # #")\n"
-
-    # Fixes
-    log "$(colorir "ciano" "# # # Correções FALEVOX # # #")"
-    if ${args[fix_monitoring_class]}; then fix_monitoring_class; fi
-    if [ ${args[php_timezone]} ]; then set_php_timezone; fi
-    log "$(colorir "ciano_claro" "# # #")\n"
-}
-
 function cleanup
 {
     if ! $DRY; then
