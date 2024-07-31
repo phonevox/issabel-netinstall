@@ -72,6 +72,10 @@ function px_custom_add_user_rating()
     
     # Atualizando a senha pra conexão do db
 
+    if $FORCE_DEBUG_MODE; then
+        echo "MYSQL ROOT PASSWORD : $MYSQL_ROOT_PASSWORD"
+    fi
+    
     #agi
     sed -i "s/SENHA_DO_DATABASE/$MYSQL_ROOT_PASSWORD/g" $DIR_AST_AGI/phonevox-customs/insert_note.php
 
