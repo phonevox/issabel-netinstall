@@ -69,6 +69,16 @@ function px_custom_add_user_rating()
         log "$TRACE [${FUNCNAME[0]}] - SEM LOGIN -"
         mv -fv $BASE_PATH/files/agi-nologin/* $DIR_AST_AGI
     fi
+    
+    # Atualizando a senha pra conexão do db
+
+    #agi
+    sed -i "s/SENHA_DO_DATABASE/$MYSQL_ROOT_PASSWORD/g" $DIR_AST_AGI/phonevox-customs/insert_note.php
+
+    #voxura
+    sed -i "s/SENHA_DO_DATABASE/$MYSQL_ROOT_PASSWORD/g" $DIR_HTML/voxura/recording.php
+    sed -i "s/SENHA_DO_DATABASE/$MYSQL_ROOT_PASSWORD/g" $DIR_HTML/voxura/conn.inc.php
+    sed -i "s/SENHA_DO_DATABASE/$MYSQL_ROOT_PASSWORD/g" $DIR_HTML/voxura/config.php
 
     # "Registrando" a existência do módulo
     log "$TRACE [${FUNCNAME[0]}] Registrando o módulo..."
@@ -109,11 +119,11 @@ function px_custom_add_backupengine()
 
     log "$TRACE [${FUNCNAME[0]}] backupengine"
     cp $ISSABEL_PRIVILEGED/backupengine $BASE_PATH/files/backupengine.bkp
-    chmod 755 $BASE_PATH/files/backupengine && chown root:root $BASE_PATH/files/backupengine
+    chmod 755 $BASE_PATH/files/backupengine
     mv -fv $BASE_PATH/files/backupengine $ISSABEL_PRIVILEGED/backupengine
 
     log "$TRACE [${FUNCNAME[0]}] pvx-backupengine-extras"
-    chmod 755 $BASE_PATH/files/pvx-backupengine-extras && chown root:root $BASE_PATH/files/pvx-backupengine-extras
+    chmod 755 $BASE_PATH/files/pvx-backupengine-extras
     mv -fv $BASE_PATH/files/pvx-backupengine-extras $ISSABEL_PRIVILEGED/pvx-backupengine-extras
 
     log "$TRACE [${FUNCNAME[0]}] Limpando \"$BASE_PATH\"..."
