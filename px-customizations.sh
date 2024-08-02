@@ -3,8 +3,8 @@ function px_custom_add_theme()
     log "$INFO ${FUNCNAME[0]}: starting..."
 
     # Repositório
-    local REPOSITORY_OWNER="PhonevoxGroupTechnology"
-    local REPOSITORY_NAME="px-issabel-theme"
+    local REPOSITORY_OWNER="phonevox"
+    local REPOSITORY_NAME="issabel-theme"
     local REPOSITORY_URL="https://github.com/$REPOSITORY_OWNER/$REPOSITORY_NAME/archive/refs/heads/main.tar.gz"
     local BASE_PATH="$CURRDIR/$REPOSITORY_NAME"
 
@@ -38,8 +38,8 @@ function px_custom_add_user_rating()
     log "$INFO ${FUNCNAME[0]}: starting..."
 
     # Repositório
-    local REPOSITORY_OWNER="PhonevoxGroupTechnology"
-    local REPOSITORY_NAME="px-avaliacao-atendimento"
+    local REPOSITORY_OWNER="phonevox"
+    local REPOSITORY_NAME="voxura"
     local REPOSITORY_URL="https://github.com/$REPOSITORY_OWNER/$REPOSITORY_NAME/archive/refs/heads/main.tar.gz"
     local BASE_PATH="$CURRDIR/$REPOSITORY_NAME"
 
@@ -93,8 +93,8 @@ function px_custom_add_backupengine()
     log "$INFO ${FUNCNAME[0]}: starting..."
 
     # Repositório
-    local REPOSITORY_OWNER="PhonevoxGroupTechnology"
-    local REPOSITORY_NAME="px-edit-issabel-backup-engine"
+    local REPOSITORY_OWNER="phonevox"
+    local REPOSITORY_NAME="issabel-backupengine"
     local REPOSITORY_URL="https://github.com/$REPOSITORY_OWNER/$REPOSITORY_NAME/archive/refs/heads/main.tar.gz"
     local BASE_PATH="$CURRDIR/$REPOSITORY_NAME"
 
@@ -132,8 +132,8 @@ function px_custom_add_siptracer()
     log "$INFO ${FUNCNAME[0]}: starting..."
 
     # Repositório
-    local REPOSITORY_OWNER="PhonevoxGroupTechnology"
-    local REPOSITORY_NAME="px-siptracer"
+    local REPOSITORY_OWNER="phonevox"
+    local REPOSITORY_NAME="siptracer"
     local REPOSITORY_URL="https://github.com/$REPOSITORY_OWNER/$REPOSITORY_NAME/archive/refs/heads/main.tar.gz"
     local BASE_PATH="$CURRDIR/$REPOSITORY_NAME"
 
@@ -297,8 +297,8 @@ function px_fix_monitoring_class()
     log "$INFO ${FUNCNAME[0]}: starting..."
 
     # Repositório
-    local REPOSITORY_OWNER="PhonevoxGroupTechnology"
-    local REPOSITORY_NAME="px-fix-monitoring-class"
+    local REPOSITORY_OWNER="phonevox"
+    local REPOSITORY_NAME="fix-monitoring-class"
     local REPOSITORY_URL="https://github.com/$REPOSITORY_OWNER/$REPOSITORY_NAME/archive/refs/heads/main.tar.gz"
     local BASE_PATH="$CURRDIR/$REPOSITORY_NAME"
 
@@ -355,8 +355,8 @@ function px_fix_dialpattern_wizard()
     log "$INFO ${FUNCNAME[0]}: starting..."
 
     # Repositório
-    local REPOSITORY_OWNER="PhonevoxGroupTechnology"
-    local REPOSITORY_NAME="px-edit-dialpattern-wizard"
+    local REPOSITORY_OWNER="phonevox"
+    local REPOSITORY_NAME="edit-dialpattern-wizard"
     local REPOSITORY_URL="https://github.com/$REPOSITORY_OWNER/$REPOSITORY_NAME/archive/refs/heads/main.tar.gz"
     local BASE_PATH="$CURRDIR/$REPOSITORY_NAME"
 

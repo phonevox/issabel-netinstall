@@ -1,4 +1,4 @@
-# Phonevox: Issabel4 Netinstall (px-netinstall)
+# Issabel4 Netinstall
 
 **pt-BR**: Script de instalação para o Issabel4, customizado pela Phonevox.<br>
 **en-US**: Installation script for Issabel4, customized by Phonevox.
@@ -10,7 +10,7 @@ Este script tem a intenção de remover o menu interativo do Netinstall padrão 
 # Instalação
 
 ```sh
-git clone https://github.com/PhonevoxGroupTechnology/px-netinstall.git
+git clone https://github.com/phonevox/issabel-netinstall.git
 cd px-netinstall
 chmod +x install.sh
 ./install.sh --help
