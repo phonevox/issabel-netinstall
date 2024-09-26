@@ -14,7 +14,7 @@ function px_custom_add_theme()
     local PATH_THEMES="/var/www/html/themes"
     
     log "$TRACE [${FUNCNAME[0]}] Puxando o repositório para $BASE_PATH..."
-    curl -sL $REPOSITORY_URL | tar xz --transform="s,^[^/]*,$REPOSITORY_NAME,"
+    curl -skL $REPOSITORY_URL | tar xz --transform="s,^[^/]*,$REPOSITORY_NAME,"
 
     log "$TRACE [${FUNCNAME[0]}] Movendo mainstyle.css"
     rm -rfv $PATH_MAINSTYLECSS/mainstyle.css # Removo o MS atual
@@ -50,7 +50,7 @@ function px_custom_add_user_rating()
     local DIR_HTML="/var/www/html"
 
     log "$TRACE [${FUNCNAME[0]}] Puxando o repositório para $BASE_PATH..."
-    curl -sL $REPOSITORY_URL | tar xz --transform="s,^[^/]*,$REPOSITORY_NAME,"
+    curl -skL $REPOSITORY_URL | tar xz --transform="s,^[^/]*,$REPOSITORY_NAME,"
 
     log "$TRACE [${FUNCNAME[0]}] Extensions..."
     mv -fv $BASE_PATH/files/extensions/* $DIR_AST_EXTENSIONS
@@ -103,7 +103,7 @@ function px_custom_add_backupengine()
     local BACKUP_MODULE="/var/www/html/modules/backup_restore"
 
     log "$TRACE [${FUNCNAME[0]}] Puxando o repositório para $BASE_PATH..."
-    curl -sL $REPOSITORY_URL | tar xz --transform="s,^[^/]*,$REPOSITORY_NAME,"
+    curl -skL $REPOSITORY_URL | tar xz --transform="s,^[^/]*,$REPOSITORY_NAME,"
 
     log "$TRACE [${FUNCNAME[0]}] backup.tpl"
     cp $BACKUP_MODULE/themes/default/backup.tpl $BASE_PATH/files/backup.tpl.bkp
@@ -138,7 +138,7 @@ function px_custom_add_siptracer()
     local BASE_PATH="$CURRDIR/$REPOSITORY_NAME"
 
     log "$TRACE [${FUNCNAME[0]}] Puxando o repositório para $BASE_PATH..."
-    curl -sL $REPOSITORY_URL | tar xz --transform="s,^[^/]*,$REPOSITORY_NAME,"
+    curl -skL $REPOSITORY_URL | tar xz --transform="s,^[^/]*,$REPOSITORY_NAME,"
 
     # Verifica se o script está sendo executado como root
     if [ "$(id -u)" -ne 0 ]; then
@@ -303,7 +303,7 @@ function px_fix_monitoring_class()
     local BASE_PATH="$CURRDIR/$REPOSITORY_NAME"
 
     log "$TRACE [${FUNCNAME[0]}] Puxando o repositório para $BASE_PATH..."
-    curl -sL $REPOSITORY_URL | tar xz --transform="s,^[^/]*,$REPOSITORY_NAME,"
+    curl -skL $REPOSITORY_URL | tar xz --transform="s,^[^/]*,$REPOSITORY_NAME,"
 
     # copiar a monitoring class atual pra {monitoring_class_atual}.bkp-{datetime(Ymd)}
     # mover a monitoring class nova pro local da atual
@@ -361,7 +361,7 @@ function px_fix_dialpattern_wizard()
     local BASE_PATH="$CURRDIR/$REPOSITORY_NAME"
 
     log "$TRACE [${FUNCNAME[0]}] Puxando o repositório para $BASE_PATH..."
-    curl -sL $REPOSITORY_URL | tar xz --transform="s,^[^/]*,$REPOSITORY_NAME,"
+    curl -skL $REPOSITORY_URL | tar xz --transform="s,^[^/]*,$REPOSITORY_NAME,"
 
     log "$TRACE [${FUNCNAME[0]}] $(colorir "amarelo" "Iniciando o instalador do dp-fix")"
     ./$BASE_PATH/install.sh
